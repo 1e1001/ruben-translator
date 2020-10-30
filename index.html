@@ -76,6 +76,7 @@
           var oc = c
           c += (seed % (variation * 2)) - variation
           seed += oc - j
+          seed = Wrap(seed)
           return BaseEncode(Wrap(c))
         }).join("")
       }
@@ -86,6 +87,7 @@
           i -= (seed % (variation * 2)) - variation
           i = Wrap(i)
           seed += i - j
+          seed = Wrap(seed)
           return String.fromCharCode(i)
         }).join("")
       }
