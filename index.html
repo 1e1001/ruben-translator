@@ -111,11 +111,11 @@
           <td>
             <label>ruben</label><br>
             <script>
-              var text = $_GET("rub")
-              if (dir === "To Ruben") text = ToRuben($_GET("eng"))
+              var textr = $_GET("rub")
+              if (dir === "To Ruben") textr = ToRuben($_GET("eng"))
               echo(
                 "<textarea name=\"rub\" cols=\"30\" rows=\"10\">",
-                text,
+                textr,
                 "</textarea>"
               )
             </script><br>
@@ -125,8 +125,15 @@
       </table>
       <script>
         echo(
-          "<p>discord formatted ruben: ",
+          "<p>discord formatted english: ",
           DF(text),
+          "</p>"
+        )
+      </script><br>
+      <script>
+        echo(
+          "<p>discord formatted ruben: ",
+          DF(textr),
           "</p>"
         )
       </script><br>
