@@ -16,8 +16,8 @@
     <script>
       var dir = $_GET("dir")
       var specials = "4HIf)$Gs"
-      var alphabet = "{S\"%#Uk]&b>4I-}f<ECZ=rY3G\\;n,9zv6qHa2'O/mgQ@i|:*xK_[JsRT5)NX81wWF^+B`0MouLp?Ad!D~V$cl7.P(thejy"
-      var spAlphabet = "*Jr\\<?{Axljbt(NWZ01oak@wgpdR|};6['!vKPLhcnDm2y%:\"3)+/FzEUV`5XeQTOi8M7SCu_>&-.#^Y,~=q9B]"
+      var alphabet = "{S\"%#Uk]&b>4I-}f<ECZ=rY3G\\;n,9zv6qHa2'O/mgQ@ |:*xK_[JsRT5)NX81wWF^+B`0MouLp?Ad!D~V$cl7.P(thejy"
+      var spAlphabet = "*Jr\\<?{Axljbt(NWZ01oak@wgpdR|};6['!vKPLhcnDm2y%:\"3)+/FzEUV`5XeQTO 8M7SCu_>&-.#^Y,~=q9B]"
       function BaseEncode(code) {
         if (code < 8187) {
           return spAlphabet[Math.floor(code / 94)] + alphabet[code % 94]
@@ -66,22 +66,24 @@
         while (n >= 65536) n -= 65536
         return n
       }
+      var initialSeed = $_GET("seed") ?? 0
+      var variation = $_GET("var") ?? 438
       function ToRuben(text) {
-        var seed = 1389248
+        var seed = initialSeed
         return Array.from(text).map((i, j) => {
           /** @type {number} */
           var c = i.charCodeAt(0)
           var oc = c
-          c += (seed % 876) - 438
+          c += (seed % (variation * 2)) - variation
           seed += oc - j
           return BaseEncode(Wrap(c))
         }).join("")
       }
       function ToEng(text) {
-        var seed = 1389248
+        var seed = initialSeed
         return BaseDecodeString(text).map((i, j) => {
           /** @type {number} */
-          i -= (seed % 876) - 438
+          i -= (seed % (variation * 2)) - variation
           i = Wrap(i)
           seed += i - j
           return String.fromCharCode(i)
@@ -126,7 +128,16 @@
           "</p>"
         )
       </script><br>
-      <img src="https://media.discordapp.net/attachments/734119604007206953/767880130554888233/caption.gif" alt="Ruben's Language">
+      <img src="https://media.discordapp.net/attachments/734119604007206953/767880130554888233/caption.gif" alt="Ruben's Language" /><br>
+      <p>Generator Settings: (dev things)</p>
+      <label>seed</label>
+      <script>
+        echo("<input type=\"number\" min=\"0\" value=\"" + initialSeed + "\"name=\"seed\" /><br>")
+      </script>
+      <label>variation</label>
+      <script>
+        echo("<input type=\"number\" min=\"0\" value=\"" + variation + "\"name=\"var\" /><br>")
+      </script>
     </form>
   </body>
 </html>
