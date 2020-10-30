@@ -72,7 +72,7 @@
           /** @type {number} */
           var c = i.charCodeAt(0)
           var oc = c
-          c += (seed % 24) - 12
+          c += (seed % 876) - 438
           seed += oc - j
           return BaseEncode(Wrap(c))
         }).join("")
@@ -81,7 +81,7 @@
         var seed = 1389248
         return BaseDecodeString(text).map((i, j) => {
           /** @type {number} */
-          i -= (seed % 24) - 12
+          i -= (seed % 876) - 438
           i = Wrap(i)
           seed += i - j
           return String.fromCharCode(i)
@@ -126,7 +126,7 @@
           "</p>"
         )
       </script><br>
-      <img src="https://media.discordapp.net/attachments/733794807163650078/771807980039045170/caption.gif" alt="Ruben Language">
+      <img src="https://media.discordapp.net/attachments/734119604007206953/767880130554888233/caption.gif" alt="Ruben's Language">
     </form>
   </body>
 </html>
