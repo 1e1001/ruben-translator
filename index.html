@@ -1,0 +1,129 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./jhp.js"></script>
+    <style>
+      body, textarea, input {
+        background-color: #000000;
+        color: #ffffff;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Ruben language translator</h1>
+    <script>
+      var dir = $_GET("dir")
+      var specials = "4HIf)$Gs"
+      var alphabet = "{S\"%#Uk]&b>4I-}f<ECZ=rY3G\\;n,9zv6qHa2'O/mgQ@i|:*xK_[JsRT5)NX81wWF^+B`0MouLp?Ad!D~V$cl7.P(thejy"
+      var spAlphabet = "*Jr\\<?{Axljbt(NWZ01oak@wgpdR|};6['!vKPLhcnDm2y%:\"3)+/FzEUV`5XeQTOi8M7SCu_>&-.#^Y,~=q9B]"
+      function BaseEncode(code) {
+        if (code < 8187) {
+          return spAlphabet[Math.floor(code / 94)] + alphabet[code % 94]
+        } else {
+          return specials[Math.floor(code / 8836)] + alphabet[Math.floor((code / 94) % 94)] + alphabet[code % 94]
+        }
+      }
+      function BaseDecode(code) {
+        if (code.length === 3) {
+          return alphabet.indexOf(code[2]) + alphabet.indexOf(code[1]) * 94 + specials.indexOf(code[0]) * 8836
+        } else {
+          return alphabet.indexOf(code[1]) + spAlphabet.indexOf(code[0]) * 94
+        }
+      }
+      function BaseDecodeString(str) {
+        var out = []
+        var current = ""
+        for (var i = 0; i < str.length; i++) {
+          let c = str[i]
+          current += c
+          if (specials.indexOf(current[0]) === -1) {
+            if (current.length >= 2) {
+              out.push(BaseDecode(current))
+              current = ""
+            }
+          } else {
+            if (current.length >= 3) {
+              out.push(BaseDecode(current))
+              current = ""
+            }
+          }
+        }
+        return out
+      }
+      function DF(str) {
+        return Array.from(str).map(i => {
+          if ("*_`<>!@#/".indexOf(i) !== -1) return "\\" + i
+          return i
+        }).join('')
+      }
+      function Wrap(n) {
+        while (n < 0) n += 65536
+        while (n >= 65536) n -= 65536
+        return n
+      }
+      function ToRuben(text) {
+        var seed = 1389248
+        return Array.from(text).map((i, j) => {
+          /** @type {number} */
+          var c = i.charCodeAt(0)
+          var oc = c
+          c += (seed % 24) - 12
+          seed += oc - j
+          return BaseEncode(Wrap(c))
+        }).join("")
+      }
+      function ToEng(text) {
+        var seed = 1389248
+        return BaseDecodeString(text).map((i, j) => {
+          /** @type {number} */
+          i -= (seed % 24) - 12
+          i = Wrap(i)
+          seed += i - j
+          return String.fromCharCode(i)
+        }).join("")
+      }
+    </script>
+    <form action="./index.html" method="get">
+      <table>
+        <tr>
+          <td>
+            <label>english</label><br>
+            <script>
+              var text = $_GET("eng")
+              if (dir === "To English") text = ToEng($_GET("rub"))
+              echo(
+                "<textarea name=\"eng\" cols=\"30\" rows=\"10\">",
+                text,
+                "</textarea>"
+              )
+            </script><br>
+            <input type="submit" value="To Ruben" name="dir">
+          </td>
+          <td>
+            <label>ruben</label><br>
+            <script>
+              var text = $_GET("rub")
+              if (dir === "To Ruben") text = ToRuben($_GET("eng"))
+              echo(
+                "<textarea name=\"rub\" cols=\"30\" rows=\"10\">",
+                text,
+                "</textarea>"
+              )
+            </script><br>
+            <input type="submit" value="To English" name="dir">
+          </td>
+        </tr>
+      </table>
+      <script>
+        echo(
+          "<p>discord formatted ruben: ",
+          DF(text),
+          "</p>"
+        )
+      </script><br>
+      <img src="https://media.discordapp.net/attachments/733794807163650078/771807980039045170/caption.gif" alt="Ruben Language">
+    </form>
+  </body>
+</html>

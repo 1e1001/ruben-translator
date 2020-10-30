@@ -1,0 +1,22 @@
+{
+  "name": "ruben-language",
+  "version": "1.0.0",
+  "description": "translate to and from ruben language",
+  "main": "testserver.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "none"
+  },
+  "keywords": [
+    "ruben",
+    "language",
+    "ruben",
+    "language",
+    "translator"
+  ],
+  "author": "1e1001",
+  "license": "MIT"
+}
