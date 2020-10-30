@@ -54,7 +54,7 @@
       }
       function DF(str) {
         return Array.from(str).map(i => {
-          if ("*_`!@#/".indexOf(i) !== -1) return "\\" + i
+          if ("*_`!@#/\\".indexOf(i) !== -1) return "\\" + i
           if (i === "<") return "\\&lt;"
           if (i === ">") return "\\&gt;"
           if (i === "&") return "\\&amp;"
