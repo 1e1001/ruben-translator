@@ -1,5 +1,5 @@
 {
-  "name": "ruben-language",
+  "name": "ruben-translator",
   "version": "1.0.0",
   "description": "translate to and from ruben language",
   "main": "testserver.js",
