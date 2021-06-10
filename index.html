@@ -68,6 +68,8 @@
       }
       var initialSeed = parseInt($_GET("seed")) ?? 0
       var variation = parseInt($_GET("var")) ?? 438
+      if (isNaN(initialSeed)) initialSeed = 0;
+      if (isNaN(variation)) variation = 438;
       function ToRuben(text) {
         var seed = initialSeed
         return Array.from(text).map((i, j) => {
