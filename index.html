@@ -16,8 +16,8 @@
     <script>
       var dir = $_GET("dir")
       var specials = "4HIf)$Gs"
-      var alphabet = "{S\"%#Uk]&b>4I-}f<ECZ=rY3G\\;n,9zv6qHa2'O/mgQ@ |:*xK_[JsRT5)NX81wWF^+B`0MouLp?Ad!D~V$cl7.P(thejy"
-      var spAlphabet = "*Jr\\<?{Axljbt(NWZ01oak@wgpdR|};6['!vKPLhcnDm2y%:\"3)+/FzEUV`5XeQTO 8M7SCu_>&-.#^Y,~=q9B]"
+      var alphabet = "{S\"%#Uk]&b>4I-}f<ECZ=rY3G\\;n,9zv6qHa2'O/mgQ@ |:*xK_[JsRT5)NX81wWF^+Bi0MouLp?Ad!D~V$cl7.P(thejy"
+      var spAlphabet = "*Jr\\<?{Axljbt(NWZ01oak@wgpdR|};6['!vKPLhcnDm2y%:\"3)+/FzEUVi5XeQTO 8M7SCu_>&-.#^Y,~=q9B]"
       function BaseEncode(code) {
         if (code < 8187) {
           return spAlphabet[Math.floor(code / 94)] + alphabet[code % 94]
@@ -66,8 +66,8 @@
         while (n >= 65536) n -= 65536
         return n
       }
-      var initialSeed = $_GET("seed") ?? 0
-      var variation = $_GET("var") ?? 438
+      var initialSeed = parseInt($_GET("seed")) ?? 0
+      var variation = parseInt($_GET("var")) ?? 438
       function ToRuben(text) {
         var seed = initialSeed
         return Array.from(text).map((i, j) => {
